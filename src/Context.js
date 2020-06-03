@@ -5,6 +5,7 @@ const Context = React.createContext();
 
 const ContextProvider = ({ children }) => {
   const [allPhotos, setAllPhotos] = useState([]);
+  const [cartItems, setCartItems] = useState([]);
 
   useEffect(() => {
     axios
@@ -18,6 +19,13 @@ const ContextProvider = ({ children }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  const addImage = (image) => {
+    console.log("addImage");
+    if (!cartItems.includes(image)) {
+      setCartItems((prevState) => [...prevState, image]);
+    }
+  };
+
   const toggleFavorite = (id) => {
     const updatedArr = allPhotos.map((photo) => {
       if (photo.id === id) {
@@ -30,7 +38,7 @@ const ContextProvider = ({ children }) => {
   };
 
   return (
-    <Context.Provider value={{ allPhotos, toggleFavorite }}>
+    <Context.Provider value={{ allPhotos, toggleFavorite, addImage }}>
       {children}
     </Context.Provider>
   );
