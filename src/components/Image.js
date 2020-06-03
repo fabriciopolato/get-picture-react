@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
+import { Context } from "../Context";
 
 const Image = ({ className, img }) => {
   const [isHovered, setIsHovered] = useState(false);
-  console.log(isHovered);
+  const { toggleFavorite } = useContext(Context);
 
   const handleHoverEnter = () => {
     setIsHovered(true);
@@ -13,14 +14,21 @@ const Image = ({ className, img }) => {
   };
 
   return (
-    <div className={`${className} image-container`}>
-      <img
-        onMouseEnter={handleHoverEnter}
-        onMouseLeave={handleHoverLeave}
-        src={img.url}
-        className="image-grid"
-        alt="some pic"
-      />
+    <div
+      className={`${className} image-container`}
+      onMouseEnter={handleHoverEnter}
+      onMouseLeave={handleHoverLeave}
+    >
+      <img src={img.url} className="image-grid" alt="some pic" />
+      {isHovered && (
+        <>
+          <i
+            onClick={() => toggleFavorite(img.id)}
+            className="ri-heart-line favorite"
+          ></i>
+          <i className="ri-add-circle-line cart"></i>
+        </>
+      )}
     </div>
   );
 };

@@ -18,7 +18,22 @@ const ContextProvider = ({ children }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  return <Context.Provider value={{ allPhotos }}>{children}</Context.Provider>;
+  const toggleFavorite = (id) => {
+    const updatedArr = allPhotos.map((photo) => {
+      if (photo.id === id) {
+        return { ...photo, isFavorite: !photo.isFavorite };
+      }
+      return photo;
+    });
+
+    setAllPhotos(updatedArr);
+  };
+
+  return (
+    <Context.Provider value={{ allPhotos, toggleFavorite }}>
+      {children}
+    </Context.Provider>
+  );
 };
 
 export { ContextProvider, Context };
