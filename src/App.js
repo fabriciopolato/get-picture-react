@@ -6,11 +6,10 @@ import { Route, Switch } from "react-router-dom";
 
 function App() {
   return (
-    <div>
+    <>
       <Header />
-      <h1>Home Page</h1>
       <Switch>
-        <Route path="/" exact>
+        <Route exact path="/">
           <Photos />
         </Route>
 
@@ -18,7 +17,7 @@ function App() {
           <Cart />
         </Route>
       </Switch>
-    </div>
+    </>
   );
 }
 
