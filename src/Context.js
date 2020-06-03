@@ -6,7 +6,7 @@ const Context = React.createContext();
 const ContextProvider = ({ children }) => {
   const [allPhotos, setAllPhotos] = useState([]);
   const [cartItems, setCartItems] = useState([]);
-
+  console.log(cartItems);
   useEffect(() => {
     axios
       .get(
@@ -26,6 +26,12 @@ const ContextProvider = ({ children }) => {
     }
   };
 
+  const removeImage = (image) => {
+    setCartItems((prevState) =>
+      prevState.filter((item) => image.id !== item.id)
+    );
+  };
+
   const toggleFavorite = (id) => {
     const updatedArr = allPhotos.map((photo) => {
       if (photo.id === id) {
@@ -38,7 +44,9 @@ const ContextProvider = ({ children }) => {
   };
 
   return (
-    <Context.Provider value={{ allPhotos, toggleFavorite, addImage }}>
+    <Context.Provider
+      value={{ allPhotos, toggleFavorite, addImage, removeImage, cartItems }}
+    >
       {children}
     </Context.Provider>
   );
