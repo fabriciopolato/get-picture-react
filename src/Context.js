@@ -6,7 +6,7 @@ const Context = React.createContext();
 const ContextProvider = ({ children }) => {
   const [allPhotos, setAllPhotos] = useState([]);
   const [cartItems, setCartItems] = useState([]);
-  const [isOrdered, setIsOrdered] = useState(false);
+  const [ordered, setOrdered] = useState("Place Order");
 
   useEffect(() => {
     axios
@@ -53,11 +53,11 @@ const ContextProvider = ({ children }) => {
   };
 
   const placeOrder = () => {
-    setIsOrdered(true);
+    setOrdered("Ordering...");
 
     setTimeout(() => {
-      setIsOrdered(false);
       setCartItems([]);
+      setOrdered("Place Order");
     }, 3000);
   };
 
@@ -71,7 +71,7 @@ const ContextProvider = ({ children }) => {
         cartItems,
         calculateTotal,
         placeOrder,
-        isOrdered,
+        ordered,
       }}
     >
       {children}

@@ -3,14 +3,12 @@ import { Context } from "../Context";
 import CartItem from "../components/CartItem";
 
 const Cart = () => {
-  const { cartItems, calculateTotal, placeOrder, isOrdered } = useContext(
+  const { cartItems, calculateTotal, placeOrder, ordered } = useContext(
     Context
   );
   const cartItemElements = cartItems.map((item) => (
     <CartItem key={item.id} item={item} />
   ));
-
-  const textButton = isOrdered ? "Ordering..." : "Place Order";
 
   return (
     <main className="cart-page">
@@ -18,7 +16,11 @@ const Cart = () => {
       {cartItemElements}
       <p className="total-cost">Total: {calculateTotal()}</p>
       <div className="order-button">
-        <button onClick={() => placeOrder()}>{textButton}</button>
+        {cartItems.length > 0 ? (
+          <button onClick={() => placeOrder()}>{ordered}</button>
+        ) : (
+          <p>You have no items in your card</p>
+        )}
       </div>
     </main>
   );
