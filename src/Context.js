@@ -6,7 +6,8 @@ const Context = React.createContext();
 const ContextProvider = ({ children }) => {
   const [allPhotos, setAllPhotos] = useState([]);
   const [cartItems, setCartItems] = useState([]);
-  console.log(cartItems);
+  const [isOrdered, setIsOrdered] = useState(false);
+
   useEffect(() => {
     axios
       .get(
@@ -43,9 +44,35 @@ const ContextProvider = ({ children }) => {
     setAllPhotos(updatedArr);
   };
 
+  const calculateTotal = () => {
+    const price = 5.99;
+    return (cartItems.length * price).toLocaleString("en-US", {
+      style: "currency",
+      currency: "USD",
+    });
+  };
+
+  const placeOrder = () => {
+    setIsOrdered(true);
+
+    setTimeout(() => {
+      setIsOrdered(false);
+      setCartItems([]);
+    }, 3000);
+  };
+
   return (
     <Context.Provider
-      value={{ allPhotos, toggleFavorite, addImage, removeImage, cartItems }}
+      value={{
+        allPhotos,
+        toggleFavorite,
+        addImage,
+        removeImage,
+        cartItems,
+        calculateTotal,
+        placeOrder,
+        isOrdered,
+      }}
     >
       {children}
     </Context.Provider>
